@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<siteMap xmlns="http://schemas.microsoft.com/AspNet/SiteMap-File-1.0">
+  <siteMapNode url="~\Home.aspx"  title="Home">
+    
+    <siteMapNode title ="Admin">
+      <siteMapNode url="~\changepassword.aspx"  title="Change Password" />
+      <siteMapNode url="~\Profile.aspx"  title="Profile" />
+    </siteMapNode>
+
+    <siteMapNode title="Portal">
+      <siteMapNode url ="~\Birthday_Card.aspx" title="BirthDay Cards" />
+      <siteMapNode title="BirthDay Wishes" />
+      <siteMapNode url ="~\News.aspx" title="News and Comments" />
+    </siteMapNode>
+    <siteMapNode title="HRM">
+      <siteMapNode title="Attendance System">
+        <siteMapNode url ="~\Employee_Attendance.aspx" title="Attendence and Leave" />
+        <siteMapNode url ="~\M_LeaveForm.aspx" title="Leave Requistion" />
+        <siteMapNode url ="~\Leave_EncashmentForm.aspx" title="Leave Encahment Requistion" />
+      </siteMapNode>
+    </siteMapNode>
+    <siteMapNode title="Project and Scheduling" />
+  </siteMapNode>
+</siteMap>
