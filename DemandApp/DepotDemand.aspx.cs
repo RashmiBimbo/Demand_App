@@ -1,21 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
 using System.Data;
 using System.Web.UI.WebControls;
-using System.Text.RegularExpressions;
-using DemandApp;
-using System.Drawing;
 using System.Net;
 using DemandApp.Models;
 using Newtonsoft.Json;
-using Microsoft.Ajax.Utilities;
-using System.Web.Security;
-using Microsoft.AspNet.Identity;
-using System.Globalization;
-using System.Runtime.InteropServices.ComTypes;
 
 namespace DemandApp
 {
@@ -24,7 +14,7 @@ namespace DemandApp
         private static string token = string.Empty;
         private static int RetrySeconds = 10;
         private static int MaxRetries = 10;
-      //  private static string endpoint = "https://modernuat.sandbox.operations.dynamics.com";
+        //  private static string endpoint = "https://modernuat.sandbox.operations.dynamics.com";
         private static string endpoint = "https://mfprod.operations.dynamics.com/";
 
 
@@ -57,16 +47,10 @@ namespace DemandApp
                     {
                     }
                     else
-                    {
-
                         Response.Redirect("./Home.aspx");
-
-                    }
                 }
                 else
-                {
                     Response.Redirect("./Login.aspx");
-                }
             }
         }
 
@@ -74,7 +58,6 @@ namespace DemandApp
         {
 
         }
-
 
         private void PopulateDdl(string proc)
         {
@@ -84,7 +67,6 @@ namespace DemandApp
             //DdlUser.DataTextField = RBCust.Checked ? "Customer_Name" : "Name";
             //DdlUser.DataBind();
         }
-
 
         private DataTable GetDataSrc(string query)
         {
@@ -103,8 +85,6 @@ namespace DemandApp
             }
         }
 
-
-
         protected void emptyformGrid1()
         {
             ddlgroupname.SelectedValue = null;
@@ -112,6 +92,7 @@ namespace DemandApp
             txt_demnaddate.Text = "";
             CMDSave.Visible = false;
         }
+
         protected void AllGridEmpty()
         {
             ddlgroupname.SelectedValue = null;
@@ -127,16 +108,13 @@ namespace DemandApp
             Vtxt_DemadDate.Text = "";
             GridView3.DataSource = null;
             GridView3.DataBind();
-
-
-
-
             rpt_strdate.Text = "";
             rpt_Enddate.Text = "";
 
             GridView2.DataSource = null;
             GridView2.DataBind();
         }
+
         protected void Menu1_MenuItemClick(object sender, MenuEventArgs e)
         {
             {
@@ -147,27 +125,12 @@ namespace DemandApp
                 loadGroup();
                 AllGridEmpty();
                 for (i = 0; i <= Menu1.Items.Count - 1; i++)
-
                 {
-
                     if (i == Convert.ToInt32(e.Item.Value))
-
-                    {
-
                         Menu1.Items[i].Text = Menu1.Items[i].Text;
-
-                    }
-
                     else
-
-                    {
-
                         Menu1.Items[i].Text = Menu1.Items[i].Text;
-
-                    }
-
                 }
-
             }
         }
 
@@ -182,73 +145,59 @@ namespace DemandApp
 
                 DDLCustomer.Items.Add(new ListItem("", "0"));
                 for (int i = 0; i < dt.Rows.Count; i++)
-                {
                     DDLCustomer.Items.Add(new ListItem(dt.Rows[i]["Customer_Name"].ToString().ToUpper(), dt.Rows[i]["Customer_Id"].ToString().ToUpper()));
-                }
-
             }
             else
-            {
                 DDLCustomer.Items.Clear();
-            }
-
         }
+
+
         protected void loadcustomerlist()
         {
-
-
             string query = "select Customer_Id,Customer_Name from V_Customer_Master where SalespersonCode='" + UserId + "'  and Sub_Company_ID='" + CompanyId + "' order by Customer_Id";
+
             if (Convert.ToString(Session["User_type"]) == "6")
-            {
                 query = "select Customer_Id,Customer_Name from V_Customer_Master where SupervisorCode='" + UserId + "' and Sub_Company_ID='" + CompanyId + "'  order by Customer_Id";
-            }
+
             DataTable dt = GetDataSrc(query);
 
             if (dt != null && dt.Rows.Count > 0)
             {
                 DDLCustomer.Items.Clear();
 
-
                 DDLCustomer.Items.Add(new ListItem("", "0"));
                 for (int i = 0; i < dt.Rows.Count; i++)
-                {
                     DDLCustomer.Items.Add(new ListItem(dt.Rows[i]["Customer_Name"].ToString().ToUpper(), dt.Rows[i]["Customer_Id"].ToString().ToUpper()));
-                }
-
             }
         }
+
         protected void loadGroup()
         {
-
             string selquery = "select * from V_ItemGroup";
-            DataTable dt= GetDataSrc(selquery);
+            DataTable dt = GetDataSrc(selquery);
 
             ddlgroupname.Items.Clear();
-          //  Rpt_ddlgname.Items.Clear();
+            //  Rpt_ddlgname.Items.Clear();
             ddlgroupname.Items.Add(new ListItem("", "0"));
             //Rpt_ddlgname.Items.Add(new ListItem("", "0"));
-            if (dt!= null && dt.Rows.Count>0)
+            if (dt != null && dt.Rows.Count > 0)
             {
                 for (int i = 0; i < dt.Rows.Count; i++)
-                {
                     ddlgroupname.Items.Add(new ListItem(Convert.ToString(dt.Rows[i]["name"]), Convert.ToString(dt.Rows[i]["name"])));
-                }
-
             }
         }
-
 
         protected void txt_demnaddate_TextChanged(object sender, EventArgs e)
         {
             //loadcustomerlist();
             loadGroup();
         }
+
         protected void OnSelectedIndexChanged(object sender, EventArgs e)
         {
             string query = "select Customer_Id,Customer_Name,SalesGroup,Depot_id,MTRouteId RouteId from V_Customer_Master where customer_Id='" + DDLCustomer.SelectedValue + "' and Sub_Company_id='" + Convert.ToString(Session["CompanyId"]) + "'  order by Customer_Id";
 
             DataTable dt = GetDataSrc(query);
-
 
             if (dt != null && dt.Rows.Count > 0)
             {
@@ -264,30 +213,21 @@ namespace DemandApp
             string query = string.Empty;
             string companyid = Convert.ToString(Session["CompanyId"]);
             if (Convert.ToString(Session["User_type"]) == "3" || Convert.ToString(Session["User_type"]) == "4")
-            {
                 query = "select Customer_Id,Customer_Name,SalesGroup from V_Customer_Master where SalesGroup='" + ddlgroupname.SelectedValue + "' and Sub_Company_ID='" + companyid + "'   order by Customer_Name";
-            }
             else if (Convert.ToString(Session["User_type"]) == "2")
-            {
                 query = "select Customer_Id,Customer_Name,SalesGroup from V_Customer_Master where SalespersonCode='" + Convert.ToString(Session["UserId"]) + "' and Sub_Company_ID='" + companyid + "' order by Customer_Name";
-            }
             else if (Convert.ToString(Session["User_type"]) == "6")
-            {
                 query = "select Customer_Id,Customer_Name,SalesGroup from V_Customer_Master where  SupervisorCode='" + Convert.ToString(Session["UserId"]) + "' and Sub_Company_ID='" + companyid + "'  order by Customer_Name";
-            }
             //else if (Convert.ToString(Session["LoginType"]) == "1")
             //{
             //     query = "select Customer_Id,Customer_Name,SalesGroup from V_Customer_Master where customer_Id='" + DDLCustomer.SelectedValue + "'  order by Customer_Id";
             //}
             loadcustomerlist(query);
-
         }
+
         protected void loaditemlist(string SalesGroup)
         {
-
             string companyId = Convert.ToString(Session["CompanyId"]);
-
-
 
             //string query = "select top 10 item_id,item_name from v_item_master where ITEMGROUPID='" + SalesGroup + "' and Stopped='No'";
             string IsCustomerERP = "EXEC CustomerCheckforERP '" + txt_demnaddate.Text + "','" + DDLCustomer.SelectedValue + "','" + SalesGroup + "','" + companyId + "'";
@@ -300,16 +240,14 @@ namespace DemandApp
                 return;
             }
 
-
             //string query = "select top 10 item_id,item_name from v_item_master where ITEMGROUPID='" + SalesGroup + "' and Stopped='No'";
             string query = "EXEC GetDemandItemDetails '" + txt_demnaddate.Text + "','" + DDLCustomer.SelectedValue + "','" + SalesGroup + "','" + companyId + "'";
             DataTable dt = GetDataSrc(query);
 
             if (dt.Rows.Count > 0)
             {
-
                 GridView1.DataSource = dt;
-                GridView1.DataBind();
+                //GridView1.DataBind();
                 Grid1div.Visible = true;
                 CMDSave.Visible = true;
             }
@@ -321,6 +259,7 @@ namespace DemandApp
                 CMDSave.Visible = false;
             }
         }
+
         protected string GenerateOrderNo()
         {
             string query = "EXEC [dbo].[GetDemandOrderNo] '" + DDLCustomer.SelectedValue + "', '" + txt_demnaddate.Text + "'";
@@ -377,9 +316,7 @@ namespace DemandApp
                 {
                     var ssss = connect.SelQuery(HeaderQuery, connect.ConnBBIDemand);
                     if (ssss != null)
-                    {
                         orderNo = Convert.ToString(ssss.Rows[0]["orderId"]);
-                    }
                 }
 
                 if (orderNo != null && orderNo != "" && orderNo != "0")
@@ -396,18 +333,14 @@ namespace DemandApp
                         if (Txtqty != "" && Convert.ToInt32(Txtqty) > 0)
                         {
                             SelectQuery1 = "SELECT '" + CompanyId + "', '" + DepotId + "', '" + RouteId + "', '" + CustomerId + "', '" + Item_ID + "', '" + cust_Txtqty + "','" + Txtqty + "', '" + txt_demnaddate.Text + "',NULL,'" + orderNo + "','" + LoginId + "',GETDATE(),'" + IP + "',NULL,NULL";
+
                             if (SelectQuery == "" || SelectQuery == null)
-                            {
                                 SelectQuery = SelectQuery1;
-                            }
-
                             else
-                            {
                                 SelectQuery = "\r\n" + SelectQuery + " UNION ALL \r\n" + SelectQuery1;
-                            }
                         }
-
                     }
+
                     if (SelectQuery != null && SelectQuery != "")
                     {
                         query = query + "\r\n" + SelectQuery;
@@ -420,9 +353,6 @@ namespace DemandApp
                 GridView1.DataBind();
                 Grid1div.Visible = false;
                 emptyformGrid1();
-
-
-
             }
             catch (Exception ex)
             {
@@ -437,7 +367,6 @@ namespace DemandApp
 
         protected void TABVERIFY_CMD_VIEW_Click(object sender, EventArgs e)
         {
-
             string slno = null;
             try
             {
@@ -485,6 +414,7 @@ namespace DemandApp
                 Resultjsonlist obj = new Resultjsonlist();
                 List<GetJson> LstCustomer = new List<GetJson>();
                 string UpdateQuery = "";
+
                 foreach (GridViewRow g1 in GridView3.Rows)
                 {
                     string SelectQuery1 = "";
@@ -504,12 +434,12 @@ namespace DemandApp
                     objson.OrderId = orderNo;
                     objson.SalespersonCode = LoginId;
                     objson.SupervisorCode = g1.Cells[7].Text;
-                 
+
                     DateTimeOffset now = (DateTimeOffset)(Convert.ToDateTime(Vtxt_DemadDate.Text));
 
-                    
+
                     objson.OrderDate = now;
-                    objson.ItemGroupId= g1.Cells[8].Text;
+                    objson.ItemGroupId = g1.Cells[8].Text;
 
                     LstCustomer.Add(objson);
                     string jsonresult12 = JsonConvert.SerializeObject(objson);
@@ -522,32 +452,24 @@ namespace DemandApp
                     catch (Exception ex)
                     {
                         ShowPopUpMsg("Something went wrong. please try after sometime...");
-                        return; 
+                        return;
                     }
                     if (qty != "" && Convert.ToInt32(qty) > 0)
                     {
                         SelectQuery1 = " update SD_SalesDemand_Master set Submit_Date=GETDATE() where OrderNo='" + orderNo + "' and Customer_Id='" + customerid + "' and Item_Id='" + Item_ID + "' and Company_Id='" + CompanyId + "'";
                         if (UpdateQuery == "" || UpdateQuery == null)
-                        {
                             UpdateQuery = SelectQuery1;
-                        }
                         else
-                        {
                             UpdateQuery = "\r\n" + UpdateQuery + " UNION ALL \r\n" + SelectQuery1;
-                        }
                     }
                     else if (Cust_Qty != "" && Convert.ToInt32(Cust_Qty) > 0)
                     {
                         SelectQuery1 = "SELECT '" + CompanyId + "', '" + DepotId + "', '" + RouteId + "', '" + customerid + "', '" + Item_ID + "', '" + objson.Qty + "','" + objson.Qty + "', '" + Vtxt_DemadDate.Text + "',GETDATE(),'" + orderNo + "','" + LoginId + "',GETDATE(),'" + IP + "',NULL,NULL";
-                        if (SelectQuery == "" || SelectQuery == null)
-                        {
-                            SelectQuery = SelectQuery1;
-                        }
 
+                        if (SelectQuery == "" || SelectQuery == null)
+                            SelectQuery = SelectQuery1;
                         else
-                        {
                             SelectQuery = "\r\n" + SelectQuery + " UNION ALL \r\n" + SelectQuery1;
-                        }
                     }
                 }
                 obj.Result = LstCustomer;
@@ -561,16 +483,13 @@ namespace DemandApp
                     connect.InsertValues(query, connect.ConnBBIDemand);
                 }
                 if (UpdateQuery != null && UpdateQuery != "")
-                {
                     connect.InsertValues(UpdateQuery, connect.ConnBBIDemand);
-                }
 
                 lblmgs.Visible = true;
                 this.ShowPopUpMsg("Sent to ERP successfully");
                 GridView1.DataSource = null;
                 GridView1.DataBind();
                 Grid1div.Visible = false;
-
             }
             catch (Exception ex)
             {
@@ -580,7 +499,6 @@ namespace DemandApp
             {
                 //con.Close();
             }
-
         }
 
         public void bindgrid(string customerid)
@@ -597,7 +515,6 @@ namespace DemandApp
                     GridView3.DataSource = dt;
                     GridView3.DataBind();
                 }
-
                 else
                 {
                     this.ShowPopUpMsg("No Data Found..");
@@ -605,9 +522,6 @@ namespace DemandApp
                     GridView3.DataBind();
                     //"errormessgae"
                 }
-
-
-
             }
             catch (Exception ex)
             {
@@ -618,9 +532,9 @@ namespace DemandApp
                 //con.Close();
             }
         }
+
         protected void RPT_CMD_VIEW_Click(object sender, EventArgs e)
         {
-
             string slno = null;
             try
             {
@@ -645,11 +559,8 @@ namespace DemandApp
                     GridView2.DataSource = dt;
                     GridView2.DataBind();
                 }
-
                 else
-                {
                     this.ShowPopUpMsg("No Data Found.");
-                }
             }
             catch (Exception ex)
             {
@@ -680,14 +591,12 @@ namespace DemandApp
                     DDlCust.Items.Clear();
                     // DDlCust.Items.Add(new ListItem("All", "%%"));
                     for (int i = 0; i < dt.Rows.Count; i++)
-                    {
                         DDlCust.Items.Add(new ListItem(dt.Rows[i]["Cust_Name"].ToString().ToUpper(), dt.Rows[i]["Cust_ID"].ToString().ToUpper()));
-                    }
                     bindgrid(DDlCust.SelectedValue);
                 }
-
             }
         }
+
         protected void DDlCust_BindDataTable(object sender, EventArgs e)
         {
             bindgrid(DDlCust.SelectedValue);

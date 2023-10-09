@@ -17,7 +17,7 @@ namespace DemandApp
             {
                 if (Session["LstCmpnyDataSrc"] == null)
                 {
-                   // Session["LstCmpnyDataSrc"] = GetLstCmpnyDataSrc();
+                    // Session["LstCmpnyDataSrc"] = GetLstCmpnyDataSrc();
                 }
                 return (DataTable)Session["LstCmpnyDataSrc"];
             }
@@ -29,7 +29,7 @@ namespace DemandApp
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+
             connect.AuthenticatCon();
             if (!Page.IsPostBack)
             {
@@ -59,7 +59,7 @@ namespace DemandApp
             }
         }
 
-        protected void btnLogin_Click(object sender, EventArgs e) 
+        protected void btnLogin_Click(object sender, EventArgs e)
         {
             string cmpny = LstCmpny.SelectedValue;
             string locn = LstLocn.SelectedValue;
@@ -68,13 +68,13 @@ namespace DemandApp
             try
             {
                 //Session["Master_File"] = "~/Normal/Normal_.master";
-                if (LstCmpny.SelectedValue=="" || LstCmpny.SelectedValue ==null || LstCmpny.SelectedValue =="0")
+                if (LstCmpny.SelectedValue == "" || LstCmpny.SelectedValue == null || LstCmpny.SelectedValue == "0")
                 {
                     this.ShowPopUpMsg("Please select Company Name.");
                     LstCmpny.Focus();
                     return;
                 }
-                if (TxtUserId.Text == "" || TxtUserId.Text == null )
+                if (TxtUserId.Text == "" || TxtUserId.Text == null)
                 {
                     this.ShowPopUpMsg("Please Enter User Id.");
                     TxtUserId.Focus();
@@ -95,11 +95,11 @@ namespace DemandApp
 
                 //if (chkRemMe.Checked)
                 //{
-                    Response.Cookies["PassWord"].Expires = DateTime.Now.AddDays(30);
-                    Response.Cookies["PassWord"].Value = pswrd;
-               // }
+                Response.Cookies["PassWord"].Expires = DateTime.Now.AddDays(30);
+                Response.Cookies["PassWord"].Value = pswrd;
+                // }
 
-                string mSqlQuery = "EXEC [dbo].[VALIDATELOGIN] '" + cmpny+"', '"+UsrId+"', '"+pswrd+"'" ;
+                string mSqlQuery = "EXEC [dbo].[VALIDATELOGIN] '" + cmpny + "', '" + UsrId + "', '" + pswrd + "'";
 
                 DataTable dt = connect.SelQuery(mSqlQuery, connect.ConnBBIDemand);
 
@@ -156,28 +156,27 @@ namespace DemandApp
             LstCmpny.DataTextField = "Name";
             LstCmpny.DataValueField = "DataAreaID";
         }
-        protected void loadcompanybind() 
+
+        protected void loadcompanybind()
         {
             string query = "Select DataAreaID, [Name] from V_COMPANY_MASTER where DataAreaID not in ('DAT') ORDER BY [Name]";
-           
-               DataTable dt =  GetDataSrc(query);
 
+            DataTable dt = GetDataSrc(query);
 
-            if (dt != null && dt.Rows.Count>0)
+            if (dt != null && dt.Rows.Count > 0)
             {
                 LstCmpny.Items.Add(new ListItem("--SELECT-- ", "0"));
                 for (int i = 0; i < dt.Rows.Count; i++)
                 {
                     LstCmpny.Items.Add(new ListItem(dt.Rows[i]["Name"].ToString().ToUpper(), dt.Rows[i]["DataAreaID"].ToString().ToUpper()));
                 }
-               
             }
         }
 
         private void ShowPopUpMsg(string strMessage)
         {
             ScriptManager.RegisterStartupScript(this, GetType(), "showalert", "alert('" + strMessage + "');", true);
-
         }
+
     }
 }
