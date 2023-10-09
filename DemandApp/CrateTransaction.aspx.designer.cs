@@ -11,7 +11,7 @@ namespace DemandApp
 {
 
 
-    public partial class PaymentTransaction
+    public partial class CrateTransaction
     {
 
         /// <summary>
@@ -69,13 +69,22 @@ namespace DemandApp
         protected global::System.Web.UI.WebControls.TextBox txt_enddate;
 
         /// <summary>
-        /// DivSuper control.
+        /// Div_Filters control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl DivSuper;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl Div_Filters;
+
+        /// <summary>
+        /// DIV_SV control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl DIV_SV;
 
         /// <summary>
         /// DdlSV control.
@@ -87,13 +96,13 @@ namespace DemandApp
         protected global::System.Web.UI.WebControls.DropDownList DdlSV;
 
         /// <summary>
-        /// SP_DIV control.
+        /// DIV_SP control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.HtmlControls.HtmlGenericControl SP_DIV;
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl DIV_SP;
 
         /// <summary>
         /// DDLSalesPerson control.

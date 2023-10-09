@@ -1,6 +1,6 @@
 ﻿<%--<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/NORMAL/BBISite.Master" CodeBehind="DepotDemand.aspx.cs" Inherits="DemandApp.DepotDemand" %>--%>
 
-<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/NORMAL/BBISiteNew.Master" CodeBehind="CrateTransaction.aspx.cs" Inherits="DemandApp.PaymentTransaction" %>
+<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/NORMAL/BBISiteNew.Master" CodeBehind="CrateTransaction.aspx.cs" Inherits="DemandApp.CrateTransaction" %>
 
 
 <%--<%@ Register assembly="AjaxControlToolkit" namespace="AjaxControlToolkit" tagprefix="asp" %>--%>
@@ -87,22 +87,23 @@
                                 <asp:TextBox ID="txt_enddate" class="mydatepicker" runat="server" Width="160px" AutoPostBack="true"></asp:TextBox>
                             </div>
                         </div>
-                        <div class="form-group row">
+                        <div class="form-group row" id="Div_Filters" runat="server" visible="true" >
                                 <label for="fname" class="col-sm-3 text-end control-label col-form-label">Supervisor</label>
                             <%--<div class="form-group row" >--%>
 
-                                <div class="col-sm-3" runat="server" id="DivSuper" visible="true">
-                                    <asp:DropDownList ID="DdlSV" class="form-control   dropdown-toggle " data-bs-toggle="dropdown" runat="server" Width="144px">
+                                <div class="col-sm-3" runat="server" id="DIV_SV" visible="true">
+                                    <asp:DropDownList ID="DdlSV" class="form-control   dropdown-toggle " data-bs-toggle="dropdown" runat="server" Width="144px" OnSelectedIndexChanged="DdlSV_SelectedIndexChanged" AutoPostBack="True">
                                     </asp:DropDownList>
                                 </div>
                             <%--</div>--%>
                             <%--<div class="form-group row">--%>
                                 <label for="fname" class="col-sm-3 text-end control-label col-form-label">Sales Person</label>
 
-                                <div class="col-sm-3" runat="server" id="SP_DIV" visible="true">
+                                <div class="col-sm-3" runat="server" id="DIV_SP" visible="true">
                                     <asp:DropDownList ID="DDLSalesPerson" class="form-control   dropdown-toggle " data-bs-toggle="dropdown" runat="server" Width="144px" AutoPostBack="true">
                                     </asp:DropDownList>
                                 </div>
+
                                 <%--<label for="fname" class="col-sm-6 text-end control-label col-form-label" runat="server" id="lblmessgae"></label>--%>
                             <%--</div>--%>
                         </div>
@@ -351,7 +352,7 @@
                     });
 
               } --%> 
-    </script>
+        </script>
 
     <asp:Label ID="lblleaf_id" runat="server" Visible="False"></asp:Label>
     <asp:Label ID="lblrecid" runat="server" Visible="False"></asp:Label>
