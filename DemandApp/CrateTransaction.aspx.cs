@@ -30,8 +30,7 @@ namespace DemandApp
             {
                 if (!string.IsNullOrEmpty(CompanyId))
                 {
-                    if (!(RoleId == 2 || RoleId == 3 || RoleId == 6))
-                        //if (RoleId != 3)
+                    if (!(RoleId == 3 || RoleId == 6))
                         Response.Redirect("./Home.aspx");
                 }
                 else
@@ -58,18 +57,17 @@ namespace DemandApp
 
         protected void Menu1_MenuItemClick(object sender, MenuEventArgs e)
         {
-            MultiView1.ActiveViewIndex = Int32.Parse(e.Item.Value);
+            MultiView1.ActiveViewIndex = int.Parse(e.Item.Value);
 
-            //Div_Filters.Visible = (RoleId == 3 || RoleId == 4 || RoleId == 6);
             Div_Filters.Visible = (RoleId == 3 || RoleId == 6);
-            DIV_SV.Visible = RoleId == 3;
+            lblSV.Visible= DIV_SV.Visible = RoleId == 3;
 
             if (RoleId == 3)
                 LoadSupervisors();
 
             if (RoleId == 6)
                 //LoadSalesPerson($"EXEC GETEMPLOYEE '{CompanyId}';");
-                LoadSalesPerson($"EXEC [SP_GetSalesPersonBySupervisor] '{CompanyId}', '{UserID}'");
+                LoadSalesPerson(UserID);
             {
                 //int i;
                 //loadGroup();
@@ -97,38 +95,32 @@ namespace DemandApp
             }
         }
 
-        private void LoadSalesPerson(string query)
+        private void LoadSalesPerson(string supervisor)
         {
-            DataTable dt = GetDataSrc(query);
+            DataTable dt = GetDataSrc($"EXEC [SP_GetSalesPersonBySupervisor] '{CompanyId}', '{supervisor}'");
 
             if (dt != null && dt.Rows.Count > 0)
-            {
-                DDLSalesPerson.Items.Clear();
-
-                DDLSalesPerson.Items.Add(new ListItem("All", "%%"));
-                for (int i = 0; i < dt.Rows.Count; i++)
-                {
-                    DDLSalesPerson.Items.Add(new ListItem(dt.Rows[i]["Name"].ToString().ToUpper(), dt.Rows[i]["Paycode"].ToString().ToUpper()));
-                }
-            }
+                LoadDdl(DDLSalesPerson, dt);
         }
 
         private void LoadSupervisors()
         {
-            string CompanyId = Convert.ToString(Session["CompanyId"]);
-            string query = "EXEC [SP_GetSupervisor] '" + CompanyId + "'";
+            string query = $"EXEC [SP_GetSupervisor] '{CompanyId}'";
 
             DataTable dt = GetDataSrc(query);
 
             if (dt != null && dt.Rows.Count > 0)
-            {
-                DdlSV.Items.Clear();
+                LoadDdl(DdlSV, dt);
+        }
 
-                DdlSV.Items.Add(new ListItem("All", "%%"));
-                for (int i = 0; i < dt.Rows.Count; i++)
-                {
-                    DdlSV.Items.Add(new ListItem(dt.Rows[i]["Name"].ToString().ToUpper(), dt.Rows[i]["Paycode"].ToString().ToUpper()));
-                }
+        private void LoadDdl(DropDownList ddl, DataTable dt)
+        {
+            ddl.Items.Clear();
+
+            ddl.Items.Add(new ListItem("All", "%%"));
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                ddl.Items.Add(new ListItem(dt.Rows[i]["Name"].ToString().ToUpper(), dt.Rows[i]["Paycode"].ToString().ToUpper()));
             }
         }
 
@@ -148,18 +140,17 @@ namespace DemandApp
                     return;
                 }
 
-                if (Convert.ToInt16(Session["RoleId"]) == 3 || Convert.ToInt16(Session["RoleId"]) == 4)
-                {
-                    if (DDLSalesPerson.SelectedValue == string.Empty || DDLSalesPerson.SelectedValue == "")
-                    {
-                        lblmsg.Text = "Please Select Sales Person...";
-                        return;
-                    }
-                    UserID = DDLSalesPerson.SelectedValue;
-                }
+                //if (Convert.ToInt16(Session["RoleId"]) == 3 || Convert.ToInt16(Session["RoleId"]) == 4)
+                //{
+                //    if (DDLSalesPerson.SelectedValue == string.Empty || DDLSalesPerson.SelectedValue == "")
+                //    {
+                //        lblmsg.Text = "Please Select Sales Person...";
+                //        return;
+                //    }
+                UserID = string.IsNullOrEmpty(DDLSalesPerson.SelectedValue) ? "" : DDLSalesPerson.SelectedValue;
+                //}
 
-                string query = "EXEC [dbo].[SP_GetCrateTransaction] '" + txt_startdate.Text + "','" + txt_enddate.Text + "','BBI','" +
-                    /*Convert.ToString(Session["CompanyId"]) + "','" +*/ UserID + "'";
+                string query = $"EXEC [dbo].[SP_GetCrateTransaction] '{txt_startdate.Text}', '{txt_enddate.Text}', '{CompanyId}', '{UserID}'";
                 //query = "SELECT * FROM [BBIDemand].[dbo].[SD_Crate_Transaction]";
 
                 DataTable dt = GetDataSrc(query);
@@ -220,7 +211,7 @@ namespace DemandApp
 
         protected void DdlSV_SelectedIndexChanged(object sender, EventArgs e)
         {
-            LoadSalesPerson($"EXEC [SP_GetSalesPersonBySupervisor] '{CompanyId}', '{DdlSV.SelectedValue}' ;");
+            LoadSalesPerson(DdlSV.SelectedValue);
         }
 
     }

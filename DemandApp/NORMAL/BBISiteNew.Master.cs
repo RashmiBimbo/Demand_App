@@ -25,6 +25,7 @@ namespace DemandApp
         private const string AntiXsrfUserNameKey = "__AntiXsrfUserName";
         private string _antiXsrfTokenValue;
         private Connect connect = new Connect();
+        string Roleid = string.Empty;
 
         protected void Page_Init(object sender, EventArgs e)
         {
@@ -76,7 +77,7 @@ namespace DemandApp
                 }
             }
         }
-        string Roleid = string.Empty;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             connect.AuthenticatCon();
@@ -102,6 +103,7 @@ namespace DemandApp
            // string unorderedList = GenerateUL(parentMenus, dt, sb);
            // Response.Write(unorderedList);
         }
+
         private string GenerateUL(DataRow[] menu, DataTable table, StringBuilder sb)
         {
             sb.AppendLine("<ul>");
@@ -130,12 +132,10 @@ namespace DemandApp
             sb.Append("</ul>");
             return sb.ToString();
         }
+
         public void get_menuitem(string roleid)
         {
             string msqlquery = "";
-
-
-
             msqlquery = "select LEAFID,PARENTID,LEAFNAME,LEAFPATH FROM USERLOGINURL where PARENTID is null and  Roleid in (" + roleid + ")";
             DataTable dt = GetDataSrc(msqlquery);
 
