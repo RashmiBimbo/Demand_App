@@ -148,7 +148,7 @@
             </div>
 
             <div style="width: auto; height: fit-content; overflow: auto" runat="server" id="Grid1div">
-                <asp:GridView ID="GridView1" Style="height: 200px" runat="server" CellPadding="1"
+                <asp:GridView ID="GridView1" Style="height: fit-content" runat="server" CellPadding="1"
                     CellSpacing="1" Font-Bold="False" CssClass="grid-view" Width="760px" Font-Size="Small" ForeColor="#333333"
                     GridLines="None" RowStyle-HorizontalAlign="Center" RowStyle-Wrap="false" HeaderStyle-Wrap="false"
                     AutoGenerateColumns="true" AllowPaging="True">
