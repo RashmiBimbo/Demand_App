@@ -11,22 +11,6 @@ namespace DemandApp
     {
         private Connect connect = new Connect();
 
-        public DataTable LstCmpnyDataSrc
-        {
-            get
-            {
-                if (Session["LstCmpnyDataSrc"] == null)
-                {
-                    // Session["LstCmpnyDataSrc"] = GetLstCmpnyDataSrc();
-                }
-                return (DataTable)Session["LstCmpnyDataSrc"];
-            }
-            set
-            {
-                LstCmpnyDataSrc = value;
-            }
-        }
-
         protected void Page_Load(object sender, EventArgs e)
         {
 

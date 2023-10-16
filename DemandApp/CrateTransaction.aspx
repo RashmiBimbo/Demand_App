@@ -23,7 +23,6 @@
         <div class="name">
             <asp:Label ID="lblwelcome" runat="server"></asp:Label>
         </div>
-
     </div>
 
     <script language="javascript" type="text/javascript">
@@ -76,35 +75,39 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="form-group row">
-                            <label for="fname" class="col-sm-3 text-end control-label col-form-label">Start Date</label>
+                            <label for="fname" runat="server" id="lblSD" class="col-sm-3 text-end control-label col-form-label">Start Date<span style="color: red">&nbsp*</span></label>
 
                             <div class="col-sm-3">
-                                <asp:TextBox ID="txt_startdate" class="mydatepicker" runat="server" Width="160px" AutoPostBack="true"></asp:TextBox>
+                                <span></span>
+                                <asp:TextBox ID="txt_startdate" class="mydatepicker" runat="server" Width="160px" AutoPostBack="true">
+                                </asp:TextBox>
                                 <%--<input type="text" class="form-control" id="fname" placeholder="First Name Here" />--%>
                             </div>
-                            <label for="fname" class="col-sm-3 text-end control-label col-form-label">End Date</label>
+                            <label for="fname" class="col-sm-3 text-end control-label col-form-label">End Date<span style="color: red">&nbsp*</span></label>
                             <div class="col-sm-3">
                                 <asp:TextBox ID="txt_enddate" class="mydatepicker" runat="server" Width="160px" AutoPostBack="true"></asp:TextBox>
                             </div>
+                            <%--<asp:RequiredFieldValidator runat="server" ControlToValidate="txt_startdate"
+                                ErrorMessage="Required Field" ForeColor="Red" Display="Static" Visible="true"></asp:RequiredFieldValidator>--%>
                         </div>
-                        <div class="form-group row" id="Div_Filters" runat="server" visible="true" >
-                                <label for="fname" class="col-sm-3 text-end control-label col-form-label">Supervisor</label>
+                        <div class="form-group row" id="Div_Filters" runat="server" visible="true">
+                            <label id="lblSV" for="fname" runat="server" class="col-sm-3 text-end control-label col-form-label">Supervisor</label>
                             <%--<div class="form-group row" >--%>
 
-                                <div class="col-sm-3" runat="server" id="DIV_SV" visible="true">
-                                    <asp:DropDownList ID="DdlSV" class="form-control   dropdown-toggle " data-bs-toggle="dropdown" runat="server" Width="144px" OnSelectedIndexChanged="DdlSV_SelectedIndexChanged" AutoPostBack="True">
-                                    </asp:DropDownList>
-                                </div>
+                            <div class="col-sm-3" runat="server" id="DIV_SV" visible="true">
+                                <asp:DropDownList ID="DdlSV" class="form-control   dropdown-toggle " data-bs-toggle="dropdown" runat="server" Width="144px" OnSelectedIndexChanged="DdlSV_SelectedIndexChanged" AutoPostBack="True">
+                                </asp:DropDownList>
+                            </div>
                             <%--</div>--%>
                             <%--<div class="form-group row">--%>
-                                <label for="fname" class="col-sm-3 text-end control-label col-form-label">Sales Person</label>
+                            <label for="fname" class="col-sm-3 text-end control-label col-form-label">Sales Person</label>
 
-                                <div class="col-sm-3" runat="server" id="DIV_SP" visible="true">
-                                    <asp:DropDownList ID="DDLSalesPerson" class="form-control   dropdown-toggle " data-bs-toggle="dropdown" runat="server" Width="144px" AutoPostBack="true">
-                                    </asp:DropDownList>
-                                </div>
+                            <div class="col-sm-3" runat="server" id="DIV_SP" visible="true">
+                                <asp:DropDownList ID="DDLSalesPerson" class="form-control   dropdown-toggle " data-bs-toggle="dropdown" runat="server" Width="144px" AutoPostBack="true">
+                                </asp:DropDownList>
+                            </div>
 
-                                <%--<label for="fname" class="col-sm-6 text-end control-label col-form-label" runat="server" id="lblmessgae"></label>--%>
+                            <%--<label for="fname" class="col-sm-6 text-end control-label col-form-label" runat="server" id="lblmessgae"></label>--%>
                             <%--</div>--%>
                         </div>
 
@@ -114,7 +117,6 @@
 
                             <div class="col-sm-3">
                                 <asp:Label ID="lblqty" Visible="false" runat="server"></asp:Label>
-
                             </div>
 
                             <asp:Button ID="Button1" Visible="false" class="col-sm-3 text-end control-label col-form-label" runat="server" Text="Total Qty" Height="25px" />
@@ -146,7 +148,7 @@
             </div>
 
             <div style="width: auto; height: fit-content; overflow: auto" runat="server" id="Grid1div">
-                <asp:GridView ID="GridView1" Style="height: 200px" runat="server" CellPadding="1"
+                <asp:GridView ID="GridView1" Style="height: fit-content" runat="server" CellPadding="1"
                     CellSpacing="1" Font-Bold="False" CssClass="grid-view" Width="760px" Font-Size="Small" ForeColor="#333333"
                     GridLines="None" RowStyle-HorizontalAlign="Center" RowStyle-Wrap="false" HeaderStyle-Wrap="false"
                     AutoGenerateColumns="true" AllowPaging="True">
@@ -253,8 +255,6 @@
                     <td>&nbsp;</td>
                 </tr>
             </table>
-
-
         </asp:View>
 
         <asp:View ID="tabView" runat="server">
@@ -352,7 +352,7 @@
                     });
 
               } --%> 
-        </script>
+    </script>
 
     <asp:Label ID="lblleaf_id" runat="server" Visible="False"></asp:Label>
     <asp:Label ID="lblrecid" runat="server" Visible="False"></asp:Label>

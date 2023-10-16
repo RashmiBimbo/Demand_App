@@ -51,6 +51,15 @@ namespace DemandApp
         protected global::System.Web.UI.WebControls.View tabNew;
 
         /// <summary>
+        /// lblSD control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblSD;
+
+        /// <summary>
         /// txt_startdate control.
         /// </summary>
         /// <remarks>
@@ -76,6 +85,15 @@ namespace DemandApp
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlGenericControl Div_Filters;
+
+        /// <summary>
+        /// lblSV control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblSV;
 
         /// <summary>
         /// DIV_SV control.
